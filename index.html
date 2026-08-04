@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Magazine Hub</title>
+<style>
+:root{
+  --bg:#0d0e12; --panel:#16181f; --panel2:#1c1f28; --line:#262a35;
+  --txt:#e8eaf0; --dim:#8b90a0; --accent:#c9a962;
+  --lux:#c9a962; --bty:#e0699a; --wel:#4faf7c; --lon:#6b8de3; --tou:#e08b4a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:'Apple SD Gothic Neo','Pretendard',-apple-system,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+/* gate */
+#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:99}
+#gate .box{text-align:center;padding:40px}
+#gate h1{font-size:15px;letter-spacing:4px;color:var(--accent);font-weight:600;margin-bottom:24px}
+#gate input{background:var(--panel);border:1px solid var(--line);color:var(--txt);padding:12px 16px;border-radius:8px;font-size:16px;width:220px;text-align:center;outline:none}
+#gate input:focus{border-color:var(--accent)}
+#gate .err{color:#e06a6a;font-size:12px;margin-top:12px;height:14px}
+
+/* layout */
+header{padding:28px 24px 0;max-width:1280px;margin:0 auto}
+.brand{font-size:11px;letter-spacing:3px;color:var(--accent);font-weight:700}
+h1.title{font-size:22px;font-weight:700;margin:6px 0 2px}
+.sub{font-size:12.5px;color:var(--dim);line-height:1.6}
+.sub a{color:var(--accent);border-bottom:1px solid rgba(201,169,98,.4)}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;min-width:96px}
+.stat b{display:block;font-size:20px;font-weight:700}
+.stat span{font-size:11px;color:var(--dim)}
+
+/* controls */
+.controls{max-width:1280px;margin:20px auto 0;padding:0 24px;display:flex;flex-direction:column;gap:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{background:var(--panel);border:1px solid var(--line);color:var(--dim);padding:7px 14px;border-radius:99px;font-size:12.5px;cursor:pointer;transition:.15s;user-select:none}
+.chip:hover{border-color:var(--accent);color:var(--txt)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#14120b;font-weight:700}
+.chip .n{opacity:.65;font-size:11px;margin-left:4px}
+#q{background:var(--panel);border:1px solid var(--line);color:var(--txt);padding:8px 14px;border-radius:99px;font-size:13px;outline:none;width:240px}
+#q:focus{border-color:var(--accent)}
+.spacer{flex:1}
+select{background:var(--panel);border:1px solid var(--line);color:var(--txt);padding:8px 12px;border-radius:99px;font-size:12.5px;outline:none;cursor:pointer}
+.viewbtn{background:var(--panel);border:1px solid var(--line);color:var(--dim);padding:8px 12px;border-radius:8px;font-size:12.5px;cursor:pointer}
+.viewbtn.on{color:var(--accent);border-color:var(--accent)}
+
+/* cards */
+#grid{max-width:1280px;margin:18px auto 60px;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px;transition:.15s}
+.card:hover{border-color:var(--accent);transform:translateY(-1px)}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.card .handle{font-size:15px;font-weight:700;word-break:break-all}
+.card .name{font-size:12px;color:var(--dim);margin-top:1px}
+.card .fol{font-size:17px;font-weight:800;color:var(--accent);white-space:nowrap}
+.card .fol small{font-size:10px;color:var(--dim);font-weight:400;display:block;text-align:right}
+.badges{display:flex;gap:5px;flex-wrap:wrap}
+.b{font-size:10.5px;padding:3px 8px;border-radius:5px;font-weight:600;letter-spacing:.2px}
+.b.cat-럭셔리{background:rgba(201,169,98,.14);color:var(--lux)}
+.b.cat-뷰티{background:rgba(224,105,154,.14);color:var(--bty)}
+.b.cat-웰니스{background:rgba(79,175,124,.14);color:var(--wel)}
+.b.cat-롱지비티{background:rgba(107,141,227,.14);color:var(--lon)}
+.b.cat-한국관광{background:rgba(224,139,74,.14);color:var(--tou)}
+.b.t-매체형{background:rgba(155,89,182,.16);color:#c08fd8}
+.b.t-개인형{background:rgba(120,180,240,.12);color:#7fb4e8}
+.b.t-애매{background:rgba(140,140,140,.14);color:#9aa}
+.b.s-api{background:rgba(79,175,124,.12);color:var(--wel)}
+.b.s-web{background:rgba(139,144,160,.12);color:var(--dim)}
+.card .why{font-size:12.5px;color:#b9bece;line-height:1.5}
+.card .op{font-size:11.5px;color:var(--dim);line-height:1.45;border-top:1px dashed var(--line);padding-top:7px}
+.card .link{margin-top:auto;font-size:12px;color:var(--accent);opacity:.85}
+.card .link:hover{opacity:1}
+
+/* list */
+#list{max-width:1280px;margin:18px auto 60px;padding:0 24px;display:none;flex-direction:column;gap:4px}
+.lrow{display:grid;grid-template-columns:200px 90px 84px 66px 1fr 60px;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 14px;font-size:12.5px}
+.lrow:hover{border-color:var(--accent)}
+.lrow .handle{font-weight:700;word-break:break-all}
+.lrow .fol{color:var(--accent);font-weight:700;text-align:right}
+.lrow .desc{color:#a9aebe;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lrow a{color:var(--accent)}
+.lhead{display:grid;grid-template-columns:200px 90px 84px 66px 1fr 60px;gap:10px;padding:4px 14px;font-size:10.5px;color:var(--dim);letter-spacing:1px}
+#empty{display:none;text-align:center;color:var(--dim);padding:80px 0;font-size:13px}
+footer{max-width:1280px;margin:0 auto 40px;padding:0 24px;font-size:11px;color:var(--dim);line-height:1.7;border-top:1px solid var(--line);padding-top:16px}
+@media(max-width:700px){
+  .lrow,.lhead{grid-template-columns:1fr 80px;gap:6px}
+  .lrow .cat,.lrow .type,.lrow .desc,.lrow .go,.lhead span:nth-child(n+3){display:none}
+  #q{width:100%}
+}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="box">
+    <h1>1%CLUB · MAGAZINE HUB</h1>
+    <input type="password" id="pw" placeholder="Password" autofocus>
+    <div class="err" id="pwerr"></div>
+  </div>
+</div>
+
+<header>
+  <div class="brand">1%CLUB INTERNAL</div>
+  <h1 class="title">인수 후보 인스타 매거진 허브</h1>
+  <div class="sub">
+    팔로워 5,000~80,000 · 전 계정 실검증 (Instagram Graph API / 프로필 실측) · 2026-08-04 기준
+    · <a href="https://docs.google.com/spreadsheets/d/13jRvfIX39EJU6QjSrLwrqVMpyuDck8CDIkaHKFY4f4A" target="_blank">구글시트 원본 ↗</a>
+  </div>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div class="controls">
+  <div class="row" id="catRow"></div>
+  <div class="row">
+    <div id="typeRow" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    <input id="q" placeholder="🔍 계정·키워드 검색">
+    <div class="spacer"></div>
+    <select id="sort">
+      <option value="fd">팔로워 많은순</option>
+      <option value="fa">팔로워 적은순</option>
+      <option value="u">계정명순</option>
+    </select>
+    <button class="viewbtn on" id="vCard">카드</button>
+    <button class="viewbtn" id="vList">리스트</button>
+  </div>
+</div>
+
+<div id="grid"></div>
+<div id="list"></div>
+<div id="empty">조건에 맞는 계정이 없습니다</div>
+
+<footer>
+  <b>운영 유형</b> — 매체형: 기업·팀·브랜드가 운영하는 매거진/미디어/플랫폼 (기업·기관·라이선스지는 인수 부적합, 무인격 채널 브랜드는 소규모 운영 추정으로 인수 가능성 높음) · 개인형: 개인 운영 큐레이션 (인수 용이) · 애매: 운영주체 판별 불가.<br>
+  <b>팔로워 검증</b> — API: Graph API business_discovery 정확치 · 실측: 프로필 og 메타 실측(K단위 근사). 접촉 전 개별 재확인 권장.<br>
+  1%CLUB Sales Agent · 무단 공유 금지
+</footer>
+
+<script src="data.js"></script>
+<script>
+// ---- password gate (sha-256 of pw) ----
+const HASH='7a7db4726ec27397cbbd002d9819a07656cce115b481522a6caa6e24d4725695';
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+const gate=document.getElementById('gate'),pw=document.getElementById('pw');
+if(sessionStorage.getItem('mh_ok')==='1')gate.style.display='none';
+pw.addEventListener('keydown',async e=>{
+  if(e.key!=='Enter')return;
+  if(await sha(pw.value.trim())===HASH){sessionStorage.setItem('mh_ok','1');gate.style.display='none'}
+  else{document.getElementById('pwerr').textContent='비밀번호가 올바르지 않습니다';pw.value=''}
+});
+
+// ---- state ----
+const CATS=['전체','럭셔리','뷰티','웰니스','롱지비티','한국 관광'];
+const TYPES=['전체 유형','매체형','개인형','애매'];
+let cat='전체',type='전체 유형',q='',sort='fd',view='card';
+
+const fmt=n=>n>=10000?(n/10000).toFixed(1).replace('.0','')+'만':n.toLocaleString();
+
+// ---- stats ----
+(function(){
+  const s=document.getElementById('stats');
+  const total=DATA.length,media=DATA.filter(d=>d.t==='매체형').length,ind=DATA.filter(d=>d.t==='개인형').length;
+  const items=[['전체',total],['매체형',media],['개인형',ind],
+    ...['럭셔리','뷰티','웰니스','롱지비티','한국 관광'].map(c=>[c,DATA.filter(d=>d.cat===c).length])];
+  s.innerHTML=items.map(([k,v])=>`<div class="stat"><b>${v}</b><span>${k}</span></div>`).join('');
+})();
+
+// ---- chips ----
+const catRow=document.getElementById('catRow');
+catRow.innerHTML=CATS.map(c=>{
+  const n=c==='전체'?DATA.length:DATA.filter(d=>d.cat===c).length;
+  return `<div class="chip${c===cat?' on':''}" data-c="${c}">${c}<span class="n">${n}</span></div>`;
+}).join('');
+catRow.addEventListener('click',e=>{
+  const el=e.target.closest('.chip');if(!el)return;
+  cat=el.dataset.c;[...catRow.children].forEach(x=>x.classList.toggle('on',x===el));render();
+});
+const typeRow=document.getElementById('typeRow');
+typeRow.innerHTML=TYPES.map(t=>`<div class="chip${t===type?' on':''}" data-t="${t}">${t}</div>`).join('');
+typeRow.addEventListener('click',e=>{
+  const el=e.target.closest('.chip');if(!el)return;
+  type=el.dataset.t;[...typeRow.children].forEach(x=>x.classList.toggle('on',x===el));render();
+});
+document.getElementById('q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();render()});
+document.getElementById('sort').addEventListener('change',e=>{sort=e.target.value;render()});
+const vC=document.getElementById('vCard'),vL=document.getElementById('vList');
+vC.onclick=()=>{view='card';vC.classList.add('on');vL.classList.remove('on');render()};
+vL.onclick=()=>{view='list';vL.classList.add('on');vC.classList.remove('on');render()};
+
+// ---- render ----
+function filtered(){
+  let r=DATA.filter(d=>(cat==='전체'||d.cat===cat)&&(type==='전체 유형'||d.t===type));
+  if(q)r=r.filter(d=>(d.u+' '+d.n+' '+d.w+' '+d.o).toLowerCase().includes(q));
+  if(sort==='fd')r.sort((a,b)=>b.f-a.f);
+  else if(sort==='fa')r.sort((a,b)=>a.f-b.f);
+  else r.sort((a,b)=>a.u.localeCompare(b.u));
+  return r;
+}
+function render(){
+  const r=filtered();
+  const grid=document.getElementById('grid'),list=document.getElementById('list'),empty=document.getElementById('empty');
+  empty.style.display=r.length?'none':'block';
+  grid.style.display=view==='card'&&r.length?'grid':'none';
+  list.style.display=view==='list'&&r.length?'flex':'none';
+  if(view==='card'){
+    grid.innerHTML=r.map(d=>`
+      <div class="card">
+        <div class="top">
+          <div><div class="handle">@${d.u}</div>${d.n?`<div class="name">${esc(d.n)}</div>`:''}</div>
+          <div class="fol">${fmt(d.f)}<small>${d.s==='api'?'API 정확':'실측 근사'}</small></div>
+        </div>
+        <div class="badges">
+          <span class="b cat-${d.cat.replace(' ','')}">${d.cat}</span>
+          <span class="b t-${d.t}">${d.t}</span>
+        </div>
+        ${d.w?`<div class="why">${esc(d.w)}</div>`:''}
+        ${d.o?`<div class="op">🏷 ${esc(d.o)}</div>`:''}
+        <a class="link" href="https://www.instagram.com/${d.u}/" target="_blank">인스타그램 열기 ↗</a>
+      </div>`).join('');
+  }else{
+    list.innerHTML=`<div class="lhead"><span>계정</span><span style="text-align:right">팔로워</span><span>카테고리</span><span>유형</span><span>설명</span><span></span></div>`+
+      r.map(d=>`
+      <div class="lrow">
+        <div class="handle">@${d.u}</div>
+        <div class="fol">${fmt(d.f)}</div>
+        <div class="cat"><span class="b cat-${d.cat.replace(' ','')}">${d.cat}</span></div>
+        <div class="type"><span class="b t-${d.t}">${d.t}</span></div>
+        <div class="desc">${esc(d.w)}${d.o?' · '+esc(d.o):''}</div>
+        <div class="go"><a href="https://www.instagram.com/${d.u}/" target="_blank">열기 ↗</a></div>
+      </div>`).join('');
+  }
+}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+render();
+</script>
+</body>
+</html>
