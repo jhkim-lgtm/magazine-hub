@@ -52,7 +52,12 @@ select{background:var(--panel);border:1px solid var(--line);color:var(--txt);pad
 #grid{max-width:1280px;margin:18px auto 60px;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px;transition:.15s}
 .card:hover{border-color:var(--accent);transform:translateY(-1px)}
-.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.av{width:44px;height:44px;border-radius:50%;object-fit:cover;background:var(--panel2);border:1px solid var(--line);flex-shrink:0}
+.av.ph{display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:var(--dim);text-transform:uppercase}
+.card .idw{display:flex;gap:10px;align-items:center;min-width:0}
+.lav{width:26px;height:26px;border-radius:50%;object-fit:cover;background:var(--panel2);border:1px solid var(--line);flex-shrink:0}
+.lrow .handle{display:flex;gap:8px;align-items:center}
 .card .handle{font-size:15px;font-weight:700;word-break:break-all}
 .card .name{font-size:12px;color:var(--dim);margin-top:1px}
 .card .fol{font-size:17px;font-weight:800;color:var(--accent);white-space:nowrap}
@@ -208,7 +213,10 @@ function render(){
     grid.innerHTML=r.map(d=>`
       <div class="card">
         <div class="top">
-          <div><div class="handle">@${d.u}</div>${d.n?`<div class="name">${esc(d.n)}</div>`:''}</div>
+          <div class="idw">
+            ${av(d.u,'av')}
+            <div style="min-width:0"><div class="handle">@${d.u}</div>${d.n?`<div class="name">${esc(d.n)}</div>`:''}</div>
+          </div>
           <div class="fol">${fmt(d.f)}<small>${d.s==='api'?'API 정확':'실측 근사'}</small></div>
         </div>
         <div class="badges">
@@ -223,7 +231,7 @@ function render(){
     list.innerHTML=`<div class="lhead"><span>계정</span><span style="text-align:right">팔로워</span><span>카테고리</span><span>유형</span><span>설명</span><span></span></div>`+
       r.map(d=>`
       <div class="lrow">
-        <div class="handle">@${d.u}</div>
+        <div class="handle">${av(d.u,'lav')}<span style="overflow:hidden;text-overflow:ellipsis">@${d.u}</span></div>
         <div class="fol">${fmt(d.f)}</div>
         <div class="cat"><span class="b cat-${d.cat.replace(' ','')}">${d.cat}</span></div>
         <div class="type"><span class="b t-${d.t}">${d.t}</span></div>
@@ -233,6 +241,11 @@ function render(){
   }
 }
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+// 프로필 사진: 로컬 저장본, 없으면 이니셜 원형으로 대체
+function av(u,cls){
+  return `<img class="${cls}" src="img/${encodeURIComponent(u)}.jpg" alt="" loading="lazy"
+    onerror="this.outerHTML='<div class=\\'${cls} ph\\'>${u[0].replace(/[^a-zA-Z0-9]/,'#')}</div>'">`;
+}
 render();
 </script>
 </body>
