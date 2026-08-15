@@ -24,7 +24,7 @@ const state = {
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-const PUBLIC_BACKEND_FALLBACK = "https://promotions-intellectual-tour-composer.trycloudflare.com";
+const PUBLIC_BACKEND_FALLBACK = "https://purse-cdna-bidding-indoor.trycloudflare.com";
 let API_BASE = window.location.hostname === "jhkim-lgtm.github.io" ? PUBLIC_BACKEND_FALLBACK : "";
 const apiUrl = (path) => `${API_BASE}${path}`;
 
