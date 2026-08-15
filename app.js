@@ -24,10 +24,44 @@ const state = {
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-const API_BASE = window.location.hostname === "jhkim-lgtm.github.io"
-  ? "https://bk-macmini.tail738f1c.ts.net:8443"
-  : "";
+const PUBLIC_BACKEND_FALLBACK = "https://promotions-intellectual-tour-composer.trycloudflare.com";
+let API_BASE = window.location.hostname === "jhkim-lgtm.github.io" ? PUBLIC_BACKEND_FALLBACK : "";
 const apiUrl = (path) => `${API_BASE}${path}`;
+
+function validPublicApiBase(value) {
+  try {
+    const url = new URL(String(value || ""));
+    return url.protocol === "https:" && (
+      url.hostname.endsWith(".trycloudflare.com") ||
+      url.hostname.endsWith(".ts.net")
+    ) ? url.origin : "";
+  } catch {
+    return "";
+  }
+}
+
+async function resolvePublicApiBase() {
+  if (window.location.hostname !== "jhkim-lgtm.github.io") return;
+  const stamp = Date.now();
+  const registries = [
+    `https://raw.githubusercontent.com/jhkim-lgtm/magazine-hub/main/backend.json?t=${stamp}`,
+    `backend.json?t=${stamp}`,
+  ];
+  for (const registry of registries) {
+    try {
+      const response = await fetch(registry, { cache: "no-store" });
+      if (!response.ok) continue;
+      const payload = await response.json();
+      const resolved = validPublicApiBase(payload.api_base);
+      if (resolved) {
+        API_BASE = resolved;
+        return;
+      }
+    } catch {
+      // Keep the last known public tunnel while the registry is refreshing.
+    }
+  }
+}
 
 const els = {
   form: $("#auditForm"),
@@ -865,6 +899,11 @@ document.addEventListener("error", (event) => {
 }, true);
 window.addEventListener("popstate", () => switchAppTab(new URL(window.location.href).searchParams.get("tab"), false));
 
-renderInputRows();
-getHealth();
-switchAppTab(new URL(window.location.href).searchParams.get("tab"), false);
+async function boot() {
+  renderInputRows();
+  await resolvePublicApiBase();
+  getHealth();
+  switchAppTab(new URL(window.location.href).searchParams.get("tab"), false);
+}
+
+boot();
