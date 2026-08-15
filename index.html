@@ -1,252 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>Magazine Hub</title>
-<style>
-:root{
-  --bg:#0d0e12; --panel:#16181f; --panel2:#1c1f28; --line:#262a35;
-  --txt:#e8eaf0; --dim:#8b90a0; --accent:#c9a962;
-  --lux:#c9a962; --bty:#e0699a; --wel:#4faf7c; --lon:#6b8de3; --tou:#e08b4a;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--txt);font-family:'Apple SD Gothic Neo','Pretendard',-apple-system,sans-serif;min-height:100vh}
-a{color:inherit;text-decoration:none}
-
-
-/* layout */
-header{padding:28px 24px 0;max-width:1280px;margin:0 auto}
-.brand{font-size:11px;letter-spacing:3px;color:var(--accent);font-weight:700}
-h1.title{font-size:22px;font-weight:700;margin:6px 0 2px}
-.sub{font-size:12.5px;color:var(--dim);line-height:1.6}
-.sub a{color:var(--accent);border-bottom:1px solid rgba(201,169,98,.4)}
-.stats{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;min-width:96px}
-.stat b{display:block;font-size:20px;font-weight:700}
-.stat span{font-size:11px;color:var(--dim)}
-
-/* controls */
-.controls{max-width:1280px;margin:20px auto 0;padding:0 24px;display:flex;flex-direction:column;gap:10px}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.chip{background:var(--panel);border:1px solid var(--line);color:var(--dim);padding:7px 14px;border-radius:99px;font-size:12.5px;cursor:pointer;transition:.15s;user-select:none}
-.chip:hover{border-color:var(--accent);color:var(--txt)}
-.chip.on{background:var(--accent);border-color:var(--accent);color:#14120b;font-weight:700}
-.chip .n{opacity:.65;font-size:11px;margin-left:4px}
-#q{background:var(--panel);border:1px solid var(--line);color:var(--txt);padding:8px 14px;border-radius:99px;font-size:13px;outline:none;width:240px}
-#q:focus{border-color:var(--accent)}
-.spacer{flex:1}
-select{background:var(--panel);border:1px solid var(--line);color:var(--txt);padding:8px 12px;border-radius:99px;font-size:12.5px;outline:none;cursor:pointer}
-.viewbtn{background:var(--panel);border:1px solid var(--line);color:var(--dim);padding:8px 12px;border-radius:8px;font-size:12.5px;cursor:pointer}
-.viewbtn.on{color:var(--accent);border-color:var(--accent)}
-
-/* cards */
-#grid{max-width:1280px;margin:18px auto 60px;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px;transition:.15s}
-.card:hover{border-color:var(--accent);transform:translateY(-1px)}
-.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.av{width:44px;height:44px;border-radius:50%;object-fit:cover;background:var(--panel2);border:1px solid var(--line);flex-shrink:0}
-.av.ph{display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:var(--dim);text-transform:uppercase}
-.card .idw{display:flex;gap:10px;align-items:center;min-width:0}
-.lav{width:26px;height:26px;border-radius:50%;object-fit:cover;background:var(--panel2);border:1px solid var(--line);flex-shrink:0}
-.lrow .handle{display:flex;gap:8px;align-items:center}
-.card .handle{font-size:15px;font-weight:700;word-break:break-all}
-.card .name{font-size:12px;color:var(--dim);margin-top:1px}
-.card .fol{font-size:17px;font-weight:800;color:var(--accent);white-space:nowrap}
-.card .fol small{font-size:10px;color:var(--dim);font-weight:400;display:block;text-align:right}
-.badges{display:flex;gap:5px;flex-wrap:wrap}
-.b{font-size:10.5px;padding:3px 8px;border-radius:5px;font-weight:600;letter-spacing:.2px}
-.b.cat-럭셔리{background:rgba(201,169,98,.14);color:var(--lux)}
-.b.cat-뷰티{background:rgba(224,105,154,.14);color:var(--bty)}
-.b.cat-웰니스{background:rgba(79,175,124,.14);color:var(--wel)}
-.b.cat-롱지비티{background:rgba(107,141,227,.14);color:var(--lon)}
-.b.cat-한국관광{background:rgba(224,139,74,.14);color:var(--tou)}
-.b.t-매체형{background:rgba(155,89,182,.16);color:#c08fd8}
-.b.t-개인형{background:rgba(120,180,240,.12);color:#7fb4e8}
-.b.t-애매{background:rgba(140,140,140,.14);color:#9aa}
-.b.s-api{background:rgba(79,175,124,.12);color:var(--wel)}
-.b.s-web{background:rgba(139,144,160,.12);color:var(--dim)}
-.price{background:rgba(201,169,98,.09);border:1px solid rgba(201,169,98,.28);border-radius:8px;padding:8px 11px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.price .lbl{font-size:10.5px;color:var(--dim);letter-spacing:.5px}
-.price .val{font-size:15px;font-weight:800;color:var(--accent)}
-.price.corp{background:rgba(155,89,182,.08);border-color:rgba(155,89,182,.3)}
-.price.corp .val{color:#c08fd8;font-size:12.5px}
-.card .why{font-size:12.5px;color:#b9bece;line-height:1.5}
-.card .op{font-size:11.5px;color:var(--dim);line-height:1.45;border-top:1px dashed var(--line);padding-top:7px}
-.card .link{margin-top:auto;font-size:12px;color:var(--accent);opacity:.85}
-.card .link:hover{opacity:1}
-
-/* list */
-#list{max-width:1280px;margin:18px auto 60px;padding:0 24px;display:none;flex-direction:column;gap:4px}
-.lrow{display:grid;grid-template-columns:190px 84px 122px 78px 62px 1fr 56px;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 14px;font-size:12.5px}
-.lrow:hover{border-color:var(--accent)}
-.lrow .handle{font-weight:700;word-break:break-all}
-.lrow .fol{color:var(--accent);font-weight:700;text-align:right}
-.lrow .desc{color:#a9aebe;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lrow a{color:var(--accent)}
-.lhead{display:grid;grid-template-columns:190px 84px 122px 78px 62px 1fr 56px;gap:10px;padding:4px 14px;font-size:10.5px;color:var(--dim);letter-spacing:1px}
-#empty{display:none;text-align:center;color:var(--dim);padding:80px 0;font-size:13px}
-footer{max-width:1280px;margin:0 auto 40px;padding:0 24px;font-size:11px;color:var(--dim);line-height:1.7;border-top:1px solid var(--line);padding-top:16px}
-@media(max-width:700px){
-  .lrow,.lhead{grid-template-columns:1fr 80px;gap:6px}
-  .lrow .cat,.lrow .type,.lrow .desc,.lrow .go,.lhead span:nth-child(n+3){display:none}
-  #q{width:100%}
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="인스타그램 매거진 계정의 반복 댓글러·참여율·허수 위험과 운영회사의 EV·지분 인수가를 거래 범위별로 진단합니다.">
+  <title>SCOUT/IG — Instagram Acquisition Audit</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=20260815-2330">
 </head>
 <body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="SCOUT IG 홈">
+      <span class="brand-mark">S/</span>
+      <span>SCOUT<em>IG</em></span>
+    </a>
+    <nav class="workspace-tabs" aria-label="주요 기능" role="tablist">
+      <button type="button" class="workspace-tab active" data-app-tab="audit" role="tab" aria-selected="true" aria-controls="auditView">계정 판독</button>
+      <button type="button" class="workspace-tab" data-app-tab="discovery" role="tab" aria-selected="false" aria-controls="discoveryView">Discovery <span id="discoveryTabCount">580+</span></button>
+    </nav>
+    <div class="connection-pill" id="connectionPill">
+      <span class="status-dot"></span>
+      <span id="connectionText">연결 확인 중</span>
+    </div>
+  </header>
 
-<header>
-  <div class="brand">1%CLUB INTERNAL</div>
-  <h1 class="title">인수 후보 인스타 매거진 허브</h1>
-  <div class="sub">
-    팔로워 5,000~80,000 · 전 계정 실검증 · 추정 인수가 포함(실거래 시세 조사 기반) · 2026-08-04
-    · <a href="https://docs.google.com/spreadsheets/d/13jRvfIX39EJU6QjSrLwrqVMpyuDck8CDIkaHKFY4f4A" target="_blank">구글시트 원본 ↗</a>
-  </div>
-  <div class="stats" id="stats"></div>
-</header>
+  <main id="auditView" data-app-view="audit">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow">INSTAGRAM ACQUISITION DESK <span>·</span> SEOUL</p>
+        <h1>팔로워 수 말고,<br><i>살아 있는</i><br class="mobile-break"> 계정을 삽니다.</h1>
+        <p class="hero-lede">최근 게시물과 댓글 작성자를 실수집하고 운영회사의 매출·이익·순차입금을 함께 점검해, 계정 단독가부터 법인 기업가치까지 거래 범위별로 판단합니다.</p>
+        <div class="hero-proof">
+          <div><strong>50</strong><span>최근 게시물 표본</span></div>
+          <div><strong>07</strong><span>인수 판단 축</span></div>
+          <div><strong>LIVE</strong><span>게시물·댓글 실수집</span></div>
+        </div>
+      </div>
 
-<div class="controls">
-  <div class="row" id="catRow"></div>
-  <div class="row">
-    <div id="typeRow" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-    <input id="q" placeholder="🔍 계정·키워드 검색">
-    <div class="spacer"></div>
-    <select id="sort">
-      <option value="fd">팔로워 많은순</option>
-      <option value="fa">팔로워 적은순</option>
-      <option value="u">계정명순</option>
-      <option value="pa">추정가 낮은순</option>
-      <option value="pd">추정가 높은순</option>
-    </select>
-    <button class="viewbtn on" id="vCard">카드</button>
-    <button class="viewbtn" id="vList">리스트</button>
-  </div>
-</div>
-
-<div id="grid"></div>
-<div id="list"></div>
-<div id="empty">조건에 맞는 계정이 없습니다</div>
-
-<footer>
-  <b>운영 유형</b> — 매체형: 기업·팀·브랜드가 운영하는 매거진/미디어/플랫폼 (기업·기관·라이선스지는 인수 부적합, 무인격 채널 브랜드는 소규모 운영 추정으로 인수 가능성 높음) · 개인형: 개인 운영 큐레이션 (인수 용이) · 애매: 운영주체 판별 불가.<br>
-  <b>팔로워 검증</b> — API: Graph API business_discovery 정확치 · 실측: 프로필 og 메타 실측(K단위 근사). 접촉 전 개별 재확인 권장.<br>
-  <b>추정 인수가 근거</b> — 국내 실매물 65건(creativebox.kr 계정거래 보드) + 글로벌 실매물 111건(SocialTradia·SWAPD 등) 2026-08-04 실조사.
-  국내 1K당 호가 중앙 79,200원, 실거래는 호가의 60~70% → 클로징 4~7만원/1K 적용 · 영어권은 글로벌 중앙 $19/1K에 규모 감쇠 반영(환율 1,380원) · 일본어는 5.0~7.1만/1K×0.65.
-  니치 배율 뷰티 ×1.3, 럭셔리 ×1.1~1.25, 웰니스·롱지비티 ×1.05, 관광 ×0.85.
-  협상 조정: 국내 팔로워 70% 미만 ×0.5 · 작업 팔로워 ×0.12 · 수익화 활성 ×1.5~5(또는 월수익 6~12배) · 참여율 3%+ ×1.3 · 최초 가입 이메일 미포함 ×0.8.<br>
-  <b style="color:#c08fd8">⚠️ 거래 구조</b> — 인스타그램 약관 §4.2는 계정 판매·양도를 금지하며 제재는 계정 영구 정지(구제 불가)다.
-  계정 매매가 아니라 <b>브랜드·콘텐츠·운영조직의 사업 양수도</b>로 계약하고 계정은 부수 자산으로 이관하거나, 운영 법인 자체를 인수하는 구조를 쓸 것.
-  인수 직후 국가·기기·IP를 한 번에 바꾸면 자동 탐지 트리거 → 수 주에 걸친 점진적 이관 권장. "법인 협상 필요" 표시 계정은 기업·기관·라이선스 매체라 단가 모델 미적용.<br>
-  1%CLUB Sales Agent · 무단 공유 금지
-</footer>
-
-<script src="data.js"></script>
-<script>
-
-// ---- state ----
-const CATS=['전체','럭셔리','뷰티','웰니스','롱지비티','한국 관광'];
-const TYPES=['전체 유형','매체형','개인형','애매'];
-let cat='전체',type='전체 유형',q='',sort='fd',view='card';
-
-const fmt=n=>n>=10000?(n/10000).toFixed(1).replace('.0','')+'만':n.toLocaleString();
-const won=n=>n>=10000000?(n/10000000).toFixed(n%10000000?1:0)+'천만':(n>=10000?Math.round(n/10000)+'만':n.toLocaleString());
-
-// ---- stats ----
-(function(){
-  const s=document.getElementById('stats');
-  const total=DATA.length,media=DATA.filter(d=>d.t==='매체형').length,ind=DATA.filter(d=>d.t==='개인형').length;
-  const items=[['전체',total],['매체형',media],['개인형',ind],
-    ...['럭셔리','뷰티','웰니스','롱지비티','한국 관광'].map(c=>[c,DATA.filter(d=>d.cat===c).length])];
-  const pl=DATA.reduce((a,d)=>a+d.pl,0), ph=DATA.reduce((a,d)=>a+d.ph,0);
-  s.innerHTML=items.map(([k,v])=>`<div class="stat"><b>${v}</b><span>${k}</span></div>`).join('')+
-    `<div class="stat" style="border-color:rgba(201,169,98,.4)"><b style="color:var(--accent);font-size:16px">${(pl/1e8).toFixed(1)}~${(ph/1e8).toFixed(1)}억</b><span>전량 인수 시 추정</span></div>`;
-})();
-
-// ---- chips ----
-const catRow=document.getElementById('catRow');
-catRow.innerHTML=CATS.map(c=>{
-  const n=c==='전체'?DATA.length:DATA.filter(d=>d.cat===c).length;
-  return `<div class="chip${c===cat?' on':''}" data-c="${c}">${c}<span class="n">${n}</span></div>`;
-}).join('');
-catRow.addEventListener('click',e=>{
-  const el=e.target.closest('.chip');if(!el)return;
-  cat=el.dataset.c;[...catRow.children].forEach(x=>x.classList.toggle('on',x===el));render();
-});
-const typeRow=document.getElementById('typeRow');
-typeRow.innerHTML=TYPES.map(t=>`<div class="chip${t===type?' on':''}" data-t="${t}">${t}</div>`).join('');
-typeRow.addEventListener('click',e=>{
-  const el=e.target.closest('.chip');if(!el)return;
-  type=el.dataset.t;[...typeRow.children].forEach(x=>x.classList.toggle('on',x===el));render();
-});
-document.getElementById('q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();render()});
-document.getElementById('sort').addEventListener('change',e=>{sort=e.target.value;render()});
-const vC=document.getElementById('vCard'),vL=document.getElementById('vList');
-vC.onclick=()=>{view='card';vC.classList.add('on');vL.classList.remove('on');render()};
-vL.onclick=()=>{view='list';vL.classList.add('on');vC.classList.remove('on');render()};
-
-// ---- render ----
-function filtered(){
-  let r=DATA.filter(d=>(cat==='전체'||d.cat===cat)&&(type==='전체 유형'||d.t===type));
-  if(q)r=r.filter(d=>(d.u+' '+d.n+' '+d.w+' '+d.o).toLowerCase().includes(q));
-  if(sort==='fd')r.sort((a,b)=>b.f-a.f);
-  else if(sort==='fa')r.sort((a,b)=>a.f-b.f);
-  else if(sort==='pa')r.sort((a,b)=>a.pl-b.pl);
-  else if(sort==='pd')r.sort((a,b)=>b.pl-a.pl);
-  else r.sort((a,b)=>a.u.localeCompare(b.u));
-  return r;
-}
-function render(){
-  const r=filtered();
-  const grid=document.getElementById('grid'),list=document.getElementById('list'),empty=document.getElementById('empty');
-  empty.style.display=r.length?'none':'block';
-  grid.style.display=view==='card'&&r.length?'grid':'none';
-  list.style.display=view==='list'&&r.length?'flex':'none';
-  if(view==='card'){
-    grid.innerHTML=r.map(d=>`
-      <div class="card">
-        <div class="top">
-          <div class="idw">
-            ${av(d.u,'av')}
-            <div style="min-width:0"><div class="handle">@${d.u}</div>${d.n?`<div class="name">${esc(d.n)}</div>`:''}</div>
+      <div class="audit-console" aria-labelledby="queueTitle">
+        <div class="console-head">
+          <div>
+            <span class="section-index">01 / AUDIT QUEUE</span>
+            <h2 id="queueTitle">계정 링크를 넣어주세요</h2>
           </div>
-          <div class="fol">${fmt(d.f)}<small>${d.s==='api'?'API 정확':'실측 근사'}</small></div>
+          <span class="queue-count" id="queueCount">0 / 8</span>
         </div>
-        <div class="badges">
-          <span class="b cat-${d.cat.replace(' ','')}">${d.cat}</span>
-          <span class="b t-${d.t}">${d.t}</span>
-          <span class="b s-web">${d.mk}</span>
+        <p class="console-help">프로필 URL을 넣고, 필요하면 각 계정 아래에서 법인 재무와 거래 범위를 함께 입력하세요.</p>
+        <form id="auditForm">
+          <div class="account-inputs" id="accountInputs"></div>
+          <div class="queue-actions">
+            <button type="button" class="text-button" id="addAccountButton">
+              <span aria-hidden="true">＋</span> 계정 추가
+            </button>
+            <button type="button" class="text-button muted" id="sampleButton">샘플 3계정 불러오기</button>
+          </div>
+          <div class="scan-settings">
+            <label>
+              <span>댓글 수집 깊이</span>
+              <select id="scanMode" aria-describedby="scanEstimate">
+                <option value="quick">빠른 실수집 · 12개 × 15댓글</option>
+                <option value="standard">인수 실사 · 20개 × 100댓글</option>
+                <option value="deep" selected>정밀 실사 · 50개 × 최신 15댓글</option>
+              </select>
+            </label>
+            <p id="scanEstimate">무료 범위 우선 · 결과에 수집률 표시</p>
+            <label class="refresh-check"><input type="checkbox" id="forceRefresh"> <span>캐시 없이 새로 수집</span></label>
+          </div>
+          <button class="primary-button" type="submit" id="analyzeButton">
+            <span>실데이터 분석 시작</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </button>
+        </form>
+        <div class="console-foot">
+          <span><i class="mini-check">✓</i> 공개 Professional 계정</span>
+          <span><i class="mini-check">✓</i> 댓글 아이디 자동 수집</span>
+          <span><i class="mini-lock">✓</i> API 토큰 서버 보관</span>
         </div>
-        <div class="price${d.cp?' corp':''}">
-          <span class="lbl">${d.cp?'법인 협상 필요':'추정 인수가'}</span>
-          <span class="val">${d.cp?'별도 M&amp;A':won(d.pl)+' ~ '+won(d.ph)}</span>
+      </div>
+    </section>
+
+    <section class="method-strip" id="method">
+      <div class="shell method-grid">
+        <div class="method-intro">
+          <span class="section-index light">02 / OUR LENS</span>
+          <h2>숫자보다<br>패턴을 봅니다.</h2>
         </div>
-        ${d.w?`<div class="why">${esc(d.w)}</div>`:''}
-        ${d.o?`<div class="op">🏷 ${esc(d.o)}</div>`:''}
-        <a class="link" href="https://www.instagram.com/${d.u}/" target="_blank">인스타그램 열기 ↗</a>
-      </div>`).join('');
-  }else{
-    list.innerHTML=`<div class="lhead"><span>계정</span><span style="text-align:right">팔로워</span><span style="text-align:right">추정 인수가</span><span>카테고리</span><span>유형</span><span>설명</span><span></span></div>`+
-      r.map(d=>`
-      <div class="lrow">
-        <div class="handle">${av(d.u,'lav')}<span style="overflow:hidden;text-overflow:ellipsis">@${d.u}</span></div>
-        <div class="fol">${fmt(d.f)}</div>
-        <div class="fol" style="color:${d.cp?'#c08fd8':'var(--accent)'};font-size:12px">${d.cp?'별도 M&amp;A':won(d.pl)+'~'+won(d.ph)}</div>
-        <div class="cat"><span class="b cat-${d.cat.replace(' ','')}">${d.cat}</span></div>
-        <div class="type"><span class="b t-${d.t}">${d.t}</span></div>
-        <div class="desc">${esc(d.w)}${d.o?' · '+esc(d.o):''}</div>
-        <div class="go"><a href="https://www.instagram.com/${d.u}/" target="_blank">열기 ↗</a></div>
-      </div>`).join('');
-  }
-}
-function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-// 프로필 사진: 로컬 저장본, 없으면 이니셜 원형으로 대체
-function av(u,cls){
-  return `<img class="${cls}" src="img/${encodeURIComponent(u)}.jpg" alt="" loading="lazy"
-    onerror="this.outerHTML='<div class=\\'${cls} ph\\'>${u[0].replace(/[^a-zA-Z0-9]/,'#')}</div>'">`;
-}
-render();
-</script>
+        <ol class="method-list">
+          <li><span>01</span><div><strong>반복 댓글러</strong><small>고정 참여자·댓글 품앗이 집중도</small></div></li>
+          <li><span>02</span><div><strong>정제 참여율</strong><small>상·하위 이상치를 덜어낸 평균 ER</small></div></li>
+          <li><span>03</span><div><strong>알고리즘 활력</strong><small>릴스 조회율·빈도·최근 모멘텀</small></div></li>
+          <li><span>04</span><div><strong>콘텐츠 정체성</strong><small>캡션·해시태그 기반 주제 분류</small></div></li>
+          <li><span>05</span><div><strong>인수 적합성</strong><small>진정성·전환성·데이터 완결성</small></div></li>
+          <li><span>06</span><div><strong>협상 가격</strong><small>시장 호가와 품질 할인 적용</small></div></li>
+          <li><span>07</span><div><strong>회사 가치</strong><small>매출·이익·순차입금 기반 EV/지분가</small></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="results-section shell" id="results" hidden>
+      <div class="results-heading">
+        <div>
+          <span class="section-index">03 / ACQUISITION REPORT</span>
+          <h2>매입 후보 비교표</h2>
+        </div>
+        <div class="report-meta" id="reportMeta"></div>
+      </div>
+      <div id="comparisonTable"></div>
+      <div class="result-stack" id="resultStack"></div>
+    </section>
+
+    <section class="market-section shell" id="market">
+      <div class="market-card">
+        <div class="market-copy">
+          <span class="section-index">04 / MARKET BASELINE</span>
+          <h2>계정 호가와<br>회사 가치를 섞지 않습니다.</h2>
+          <p>계정 단독은 공개 계정 호가와 소셜 품질로, 운영회사는 정상화 EBITDA·영업이익·순매출 배수로 평가합니다. 현금과 차입금이 확인되기 전에는 EV를 지분 인수가처럼 표시하지 않습니다.</p>
+          <div class="market-warning">
+            <span>!</span>
+            <p><strong>중요한 플랫폼 리스크</strong>Instagram 이용약관은 계정이나 사용자 이름을 사고팔거나 양도하는 행위를 금지합니다. 계정 자체보다 콘텐츠 IP·상표·운영 자산의 양수도 구조를 우선 검토하세요.</p>
+          </div>
+        </div>
+        <div class="comp-table" aria-label="크박 공개 호가 비교">
+          <div class="comp-head"><span>공개 매물</span><span>매도 호가</span><span>1팔로워당</span></div>
+          <div><span>1.5만 · AI 반려견</span><strong>80만원</strong><em>판매완료</em></div>
+          <div><span>1.53만 · 건강정보</span><strong>130만원</strong><em>약 85원</em></div>
+          <div><span>3.18만 · 국내 채널</span><strong>160만원</strong><em>약 50원</em></div>
+          <div><span>4.55만 · 여성 83%</span><strong>150만원</strong><em>약 33원</em></div>
+          <small>2026-08-15 크박 공개글 교차확인 · 판매완료 표시와 매도호가 구분</small>
+          <p class="global-check"><strong>회사 가치 교차검증</strong>소형 디지털 미디어 초기범위: EBITDA 3–6배 · EBIT 4–7.5배 · 순매출 0.25–0.80배. 이익 미확인 시 매출배수는 넓은 EV 참고범위로만 사용합니다.</p>
+        </div>
+      </div>
+      <div class="source-row">
+        <a href="https://creativebox.kr/igtrade" target="_blank" rel="noreferrer"><span>01</span><strong>크박 계정 거래 호가</strong><small>국내 시세 앵커</small></a>
+        <a href="https://socialtradia.com/" target="_blank" rel="noreferrer"><span>02</span><strong>Social Tradia</strong><small>글로벌 검수형 호가</small></a>
+        <a href="https://fameswap.com/" target="_blank" rel="noreferrer"><span>03</span><strong>FameSwap</strong><small>글로벌 테마 페이지</small></a>
+        <a href="https://swapd.co/?tl=en" target="_blank" rel="noreferrer"><span>04</span><strong>SWAPD</strong><small>대형 계정 호가</small></a>
+        <a href="https://www.postman.com/meta/instagram/documentation/6yqw8pt/instagram-api" target="_blank" rel="noreferrer"><span>05</span><strong>Meta Instagram API</strong><small>공식 데이터 범위</small></a>
+        <a href="https://apify.com/apify/instagram-comment-scraper" target="_blank" rel="noreferrer"><span>06</span><strong>Apify Comment Scraper</strong><small>댓글 작성자 실수집</small></a>
+        <a href="https://www.facebook.com/help/instagram/581066165581870" target="_blank" rel="noreferrer"><span>07</span><strong>Instagram 이용약관</strong><small>거래 리스크</small></a>
+        <a href="https://opendart.fss.or.kr/" target="_blank" rel="noreferrer"><span>08</span><strong>금융감독원 OpenDART</strong><small>법인 재무 원문</small></a>
+        <a href="https://www.ifrs.org/issued-standards/list-of-standards/ifrs-15-revenue-from-contracts-with-customers/" target="_blank" rel="noreferrer"><span>09</span><strong>IFRS 15</strong><small>순매출·총취급액 구분</small></a>
+        <a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/vebitda.html" target="_blank" rel="noreferrer"><span>10</span><strong>Damodaran Data</strong><small>광고업 EV/EBITDA</small></a>
+        <a href="https://www.bizbuysell.com/learning-center/guide/value-business/" target="_blank" rel="noreferrer"><span>11</span><strong>BizBuySell 2025</strong><small>소형 실거래 배수</small></a>
+        <a href="https://www.wipo.int/en/web/business/ip-valuation" target="_blank" rel="noreferrer"><span>12</span><strong>WIPO IP Valuation</strong><small>브랜드 가치평가 원칙</small></a>
+      </div>
+    </section>
+  </main>
+
+  <main id="discoveryView" data-app-view="discovery" hidden>
+    <section class="discovery-hero shell" id="discoveryTop">
+      <div class="discovery-hero-copy">
+        <p class="eyebrow">ACQUISITION DISCOVERY <span>·</span> 2026 MARKET RESET</p>
+        <h1>인수할 계정을 찾고,<br><i>가격의 범위</i>를<br>먼저 분리합니다.</h1>
+        <p>Magazine Hub의 기존 후보에 국내 유명 매거진 100개를 더하고 현재 공개 시세로 재산정했습니다. 계정 단독가는 브랜드·IP·운영회사 인수가와 합산하지 않습니다.</p>
+        <div class="discovery-actions">
+          <a class="primary-button compact" href="#discoveryCatalog">후보 바로 보기</a>
+          <button class="text-button" type="button" id="refreshDiscoveryButton">원본 허브 새로고침</button>
+        </div>
+      </div>
+      <aside class="scope-manifesto">
+        <span class="section-index">VALUATION SCOPE / NO DOUBLE COUNT</span>
+        <div class="scope-stack">
+          <article><b>01</b><div><span>ACCOUNT ONLY</span><strong>계정 단독 예비가</strong><small>공개 시세·팔로워·유형만 반영</small></div></article>
+          <article><b>02</b><div><span>BRAND / IP</span><strong>권리·수익자료 필요</strong><small>상표·도메인·콘텐츠 라이브러리</small></div></article>
+          <article class="acid"><b>03</b><div><span>COMPANY EV</span><strong>재무확인 전 미산정</strong><small>매출·EBITDA·순차입금·지분권리</small></div></article>
+        </div>
+        <p><b>≠</b> 세 금액은 더하는 항목이 아니라, 서로 다른 거래 범위입니다.</p>
+      </aside>
+    </section>
+
+    <section class="discovery-audit-strip">
+      <div class="shell discovery-stats" id="discoveryStats" aria-live="polite">
+        <div><span>탐색 후보</span><strong>—</strong><small>원본 허브</small></div>
+        <div><span>재산정</span><strong>—</strong><small>2026-08-15 시세</small></div>
+        <div><span>회사·기관</span><strong>—</strong><small>EV 재무필요</small></div>
+        <div><span>50개 실사 완료</span><strong>0</strong><small>전체 판정 보류</small></div>
+      </div>
+    </section>
+
+    <section class="discovery-catalog shell" id="discoveryCatalog">
+      <div class="catalog-heading">
+        <div>
+          <span class="section-index">DISCOVERY / 580+ CANDIDATES</span>
+          <h2>인수 후보 탐색</h2>
+          <p id="discoveryMeta">원본 후보와 현재 시세를 불러오는 중입니다.</p>
+        </div>
+        <div class="catalog-links">
+          <a href="https://jhkim-lgtm.github.io/magazine-hub/" target="_blank" rel="noreferrer">원본 Hub ↗</a>
+          <a href="https://github.com/jhkim-lgtm/magazine-hub" target="_blank" rel="noreferrer">Source ↗</a>
+        </div>
+      </div>
+
+      <div class="discovery-method-note">
+        <b>PRICE RESET</b>
+        <p>기존가는 팔로워 수 공식에 가까웠습니다. 수정가는 최신 국내·글로벌 공개 호가와 계정 규모·시장·이전가능성을 반영한 <strong>계정 단독 예비가</strong>입니다. ER·도달·반복 댓글러·저작권이 없으므로 구매추천 점수는 비워둡니다.</p>
+      </div>
+
+      <div class="discovery-toolbar">
+        <label class="discovery-search"><span class="sr-only">계정 검색</span><input type="search" id="discoverySearch" placeholder="@계정, 콘텐츠, 운영주체 검색"></label>
+        <div class="category-filters" id="discoveryCategoryFilters" aria-label="카테고리 필터"></div>
+        <div class="select-filters">
+          <label><span>유형</span><select id="discoveryType"><option value="all">전체 유형</option></select></label>
+          <label><span>시장</span><select id="discoveryMarket"><option value="all">전체 시장</option></select></label>
+          <label><span>정렬</span><select id="discoverySort"><option value="featured_desc">유명 매거진 우선</option><option value="followers_desc">팔로워 많은순</option><option value="price_desc">수정가 높은순</option><option value="price_asc">수정가 낮은순</option><option value="change_asc">하향조정 큰순</option><option value="name">계정명순</option></select></label>
+          <div class="view-switch" aria-label="보기 방식"><button type="button" class="active" data-discovery-view="grid" aria-label="카드 보기">▦</button><button type="button" data-discovery-view="list" aria-label="리스트 보기">☷</button></div>
+        </div>
+      </div>
+
+      <div class="catalog-result-line"><strong id="discoveryResultCount">—개 후보</strong><span>SCOUT 100은 Meta 현재값 · 기존 Hub 후보는 원본 표본</span></div>
+      <div class="discovery-grid" id="discoveryGrid" aria-live="polite">
+        <div class="discovery-loading"><span></span><strong>500개 이상 계정의 거래 범위를 재분류하는 중</strong></div>
+      </div>
+      <button type="button" class="load-more" id="discoveryLoadMore" hidden>더 보기</button>
+    </section>
+
+    <section class="discovery-evidence shell">
+      <div><span class="section-index">MARKET EVIDENCE</span><h2>호가는 검증하고,<br>실거래로 오해하지 않습니다.</h2></div>
+      <div class="evidence-links">
+        <a href="https://creativebox.kr/igtrade" target="_blank" rel="noreferrer"><b>KR</b><strong>크박 최신 거래 게시판</strong><small>매도 호가·판매완료 교차확인</small></a>
+        <a href="https://swapd.co/t/swapd-april-2026-digest-what-sells-on-swapd/2001970" target="_blank" rel="noreferrer"><b>GL</b><strong>SWAPD 2026 완료 거래</strong><small>월간 완료건·글로벌 가격 교차검증</small></a>
+        <a href="https://www.facebook.com/help/instagram/581066165581870" target="_blank" rel="noreferrer"><b>!</b><strong>Instagram 이용약관</strong><small>계정 매매·양도 금지 리스크</small></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div class="brand footer-brand"><span class="brand-mark">S/</span><span>SCOUT<em>IG</em></span></div>
+      <p>공개 데이터는 1차 실사입니다. 최종 인수 전 소유권·저작권·90일 인사이트와 최근 3년 재무·순차입금을 원본으로 확인하세요.</p>
+      <span>INTERNAL ACQUISITION TOOL · 2026</span>
+    </div>
+  </footer>
+
+  <div class="loading-overlay" id="loadingOverlay" hidden aria-live="polite">
+    <div class="loader-card">
+      <div class="scan-mark"><span></span><i></i></div>
+      <p class="section-index">LIVE ACCOUNT SCAN</p>
+      <h2 id="loadingTitle">공개 게시물을 불러오는 중</h2>
+      <div class="progress-track"><span id="progressBar"></span></div>
+      <p id="loadingDetail">Meta Business Discovery 연결</p>
+      <button type="button" class="text-button muted" id="hideLoaderButton">백그라운드에서 계속</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js?v=20260815-2330" defer></script>
 </body>
 </html>
