@@ -1,5 +1,5 @@
 {
-  "api_base": "https://agreed-vast-shell-wallet.trycloudflare.com",
-  "updated_at": "2026-09-10T05:08:22Z",
+  "api_base": "https://api.trycloudflare.com",
+  "updated_at": "2026-09-16T13:36:12Z",
   "provider": "Cloudflare Quick Tunnel"
 }
