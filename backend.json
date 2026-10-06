@@ -1,5 +1,5 @@
 {
-  "api_base": "https://mud-chrome-soonest-complications.trycloudflare.com",
-  "updated_at": "2026-09-17T04:01:26Z",
+  "api_base": "https://api.trycloudflare.com",
+  "updated_at": "2026-10-06T01:09:31Z",
   "provider": "Cloudflare Quick Tunnel"
 }
